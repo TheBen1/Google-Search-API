@@ -455,17 +455,13 @@ def write_html_to_file(html, filename):
 
 def get_browser_with_url(url, timeout=120, driver="firefox"):
     """Returns an open browser with a given url."""
-
+    PROXY = "127.0.0.1:8118"
     # choose a browser
-    if driver == "firefox":
-        browser = webdriver.Firefox()
-    elif driver == "ie":
-        browser = webdriver.Ie()
-    elif driver == "chrome":
-        browser = webdriver.Chrome()
-    else:
-        print("Driver choosen is not recognized")
-
+    opts = webdriver.ChromeOptions()
+    opts.add_argument('headless')
+    opts.add_argument('--proxy-server=http://%s' % PROXY)
+    browser = webdriver.Chrome(chrome_options=opts)
+    
     # set maximum load time
     browser.set_page_load_timeout(timeout)
 
