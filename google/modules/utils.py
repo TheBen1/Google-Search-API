@@ -14,7 +14,8 @@ import urllib.parse
 from functools import wraps
 # import requests
 from urllib.parse import urlencode
-from fake_useragent import UserAgent
+
+
 import sys
 
 class AreaError(KeyError):
@@ -425,11 +426,18 @@ def _get_search_url(query, page=0, per_page=10, lang='en', area='com', ncr=False
 def get_html(url):
     ua = UserAgent()
     header = ua.random
-
+    #proxies = {"http": "http://127.0.0.1:8118"}
     try:
-        request = urllib.request.Request(url)
-        request.add_header("User-Agent", header)
-        html = urllib.request.urlopen(request).read()
+        proxy_support = urllib.request.ProxyHandler({"http": "http://127.0.0.1:8118"})
+        opener = urllib.request.build_opener(proxy_support)
+        opener.addheaders=[('User-agent', header)]
+        urllib.request.install_opener(opener)
+        urllib.request.urlretrieve('http://www.google.com',"temp_html_file.html")
+        f=open("temp_html_file.html")
+        html=f.read()
+        #request = urllib.request.Request(url)
+        #request.add_header("User-Agent", header)
+        #html = urllib.request.urlopen(request).read()
         return html
     except urllib.error.HTTPError as e:
         print("Error accessing:", url)
