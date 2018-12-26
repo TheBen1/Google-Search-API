@@ -433,7 +433,7 @@ def get_html(url):
         opener = urllib.request.build_opener(proxy_support)
         opener.addheaders=[('User-agent', header)]
         urllib.request.install_opener(opener)
-        urllib.request.urlretrieve('http://www.google.com',"temp_html_file.html")
+        urllib.request.urlretrieve(url,"temp_html_file.html")
         f=open("temp_html_file.html")
         html=f.read()
         #request = urllib.request.Request(url)
