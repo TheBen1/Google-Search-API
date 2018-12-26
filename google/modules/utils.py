@@ -14,6 +14,7 @@ import urllib.parse
 from functools import wraps
 # import requests
 from urllib.parse import urlencode
+from fake_useragent import UserAgent
 
 
 import sys
